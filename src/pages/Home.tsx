@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card } from '../components/ui'
-import { Setting } from '../components/features'
+import { Card } from '@/components/ui'
+import { Setting } from '@/components/features'
 
 const Home = (): JSX.Element => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 import Select, { SingleValue, ActionMeta } from 'react-select'
-import { SelectOptionType } from '../../types'
+import { SelectOptionType } from '@/types'
 
 interface SelectOptionProps {
   value: SelectOptionType | null
