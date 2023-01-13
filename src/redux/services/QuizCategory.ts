@@ -6,8 +6,9 @@ export const categoryApi = createApi({
     baseUrl: 'https://opentdb.com/'
   }),
   endpoints: (builder) => ({
-    getCategories: builder.query<any, void>({ query: () => 'api_category.php' })
+    getCategories: builder.query<any, void>({ query: () => 'api_category.php' }),
+    getQuestions: builder.query<any, string>({ query: (feat) => `api.php${feat}` })
   })
 })
 
-export const { useGetCategoriesQuery } = categoryApi
+export const { useGetCategoriesQuery, useGetQuestionsQuery } = categoryApi

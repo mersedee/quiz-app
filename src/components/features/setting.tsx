@@ -1,30 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 import { useGetCategoriesQuery } from '@/redux/services/QuizCategory'
 import { SelectOption, Input } from '@/components/ui'
 import { CategoryType, SelectOptionType } from '@/types'
 import Button from '@/components/ui/Button'
 
 const questionDifficultyValues = [
-  { value: 'all', label: 'All' },
+  { value: '', label: 'All' },
   { value: 'easy', label: 'Easy' },
   { value: 'medium', label: 'Medium' },
   { value: 'hard', label: 'Hard' }
 ]
 
 const questionTypeValues = [
-  { value: 'all', label: 'All' },
+  { value: '', label: 'All' },
   { value: 'multiple', label: 'Multiple Choice' },
   { value: 'boolean', label: 'Boolean' }
 ]
 
-const Setting = (): JSX.Element => {
-  const { data, isFetching } = useGetCategoriesQuery()
-  const [category, setCategory] = useState<SelectOptionType | null>(null)
-  const [difficulty, setDifficulty] = useState<SelectOptionType | null>(null)
-  const [questionType, setQuestionType] = useState<SelectOptionType | null>(null)
-  const [questionNumber, setQuestionNumber] = useState<number>(0)
+const initialState = { value: '', label: 'All' }
 
-  const formattedCategories = !isFetching && data.trivia_categories.map((category: CategoryType) => ({ value: category.id, label: category.name }))
+interface Props {
+  setOptions: Dispatch<SetStateAction<string>>
+}
+
+const Setting = ({ setOptions }: Props): JSX.Element => {
+  const { data: categories, isFetching } = useGetCategoriesQuery()
+  const [category, setCategory] = useState<SelectOptionType>(initialState)
+  const [difficulty, setDifficulty] = useState<SelectOptionType>(initialState)
+  const [questionType, setQuestionType] = useState<SelectOptionType>(initialState)
+  const [questionNumber, setQuestionNumber] = useState<number>(10)
+
+  const formattedCategories: SelectOptionType[] = !isFetching && (categories.trivia_categories.map((category: CategoryType) =>
+    ({
+      value: category.id,
+      label: category.name
+    })))
 
   const onChangeCategory = (selectedOption: any): void => {
     setCategory(selectedOption)
@@ -42,8 +52,9 @@ const Setting = (): JSX.Element => {
     setQuestionNumber(+e.currentTarget.value)
   }
 
-  if (isFetching) {
-    return <div>loading</div>
+  const onQuestionRequest = (): void => {
+    const requestString = `?amount=${questionNumber}&category=${category.value}&difficulty=${difficulty.value}&type=${questionType.value}`
+    setOptions(requestString)
   }
 
   return (
@@ -77,7 +88,13 @@ const Setting = (): JSX.Element => {
         onChange={onChangeAmount}
       />
 
-      <Button intent="primary" fullWidth className="mt-6">Get Started</Button>
+      <Button
+        intent="primary"
+        fullWidth className="mt-6"
+        onClick={onQuestionRequest}
+      >
+          Get Started
+      </Button>
     </>
   )
 }
