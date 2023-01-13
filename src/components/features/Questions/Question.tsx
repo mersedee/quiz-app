@@ -20,7 +20,7 @@ const Question = ({ question }: Props): JSX.Element => {
       <ul>
         {choices.map((choice, index) => (
           <li key={index} className="block border border-indigo-600 px-2 py-3 mt-3 rounded-lg">
-            {choice}
+            {decodeHTMLEntities(choice)}
           </li>
         ))}
       </ul>

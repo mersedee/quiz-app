@@ -58,7 +58,7 @@ const Setting = ({ setOptions }: Props): JSX.Element => {
   }
 
   return (
-    <>
+    <div className="w-full">
       <h1 className="text-center text-2xl mb-4">Quiz App</h1>
 
       <label className="text-md text-gray-700 block mb-1">Select Category</label>
@@ -97,7 +97,7 @@ const Setting = ({ setOptions }: Props): JSX.Element => {
       >
           Get Started
       </Button>
-    </>
+    </div>
   )
 }
 

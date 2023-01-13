@@ -11,7 +11,7 @@ interface Props {
 const Questions = ({ questions }: Props): JSX.Element => {
   const { next, prev, current, total } = useSteps()
   return (
-    <>
+    <div className="w-full">
       <div className="flex justify-between">
         <div>{current} of {total} Question</div>
       </div>
@@ -29,7 +29,7 @@ const Questions = ({ questions }: Props): JSX.Element => {
         <Button intent="primary" onClick={next}>Next</Button>
       </div>
 
-    </>
+    </div>
   )
 }
 
