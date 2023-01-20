@@ -29,12 +29,15 @@ const Setting = ({ setOptions }: Props): JSX.Element => {
   const [difficulty, setDifficulty] = useState<SelectOptionType>(initialState)
   const [questionType, setQuestionType] = useState<SelectOptionType>(initialState)
   const [questionNumber, setQuestionNumber] = useState<number>(10)
+  let formattedCategories: SelectOptionType[] = []
 
-  const formattedCategories: SelectOptionType[] = !isFetching && (categories.trivia_categories.map((category: CategoryType) =>
+  formattedCategories = !isFetching && (categories.trivia_categories.map((category: CategoryType) =>
     ({
       value: category.id,
       label: category.name
     })))
+
+  formattedCategories = ([] as SelectOptionType[]).concat(initialState, formattedCategories)
 
   const onChangeCategory = (selectedOption: any): void => {
     setCategory(selectedOption)
