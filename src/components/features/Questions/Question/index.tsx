@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { QuestionType } from '@/types'
 import { decodeHTMLEntities } from '@/helpers/decodeHTMLEntities'
 import Option from '@/components/features/Questions/Question/Option'
@@ -9,7 +9,8 @@ interface Props {
   setScore: Dispatch<SetStateAction<number>>
 }
 
-const Index = ({ question, score, setScore }: Props): JSX.Element => {
+const Question = ({ question, score, setScore }: Props): JSX.Element => {
+  const [userAnswer, setUserAnswer] = useState<string>('')
   const randomIndex = Math.floor(Math.random() * 4)
   const insert = (arr: string[], index: number, newItem: string): string[] => [
     ...arr.slice(0, index), newItem, ...arr.slice(index)
@@ -17,6 +18,7 @@ const Index = ({ question, score, setScore }: Props): JSX.Element => {
   const choices = insert(question.incorrect_answers, randomIndex, question.correct_answer)
 
   const checkAnswer = (select: string): any => {
+    setUserAnswer(select)
     if (select === question.correct_answer) {
       setScore(score + 1)
     }
@@ -26,7 +28,7 @@ const Index = ({ question, score, setScore }: Props): JSX.Element => {
     <div>
       <h2 className="text-lg mt-3">{decodeHTMLEntities(question.question)}</h2>
 
-      <ul>
+      <ul className={userAnswer.length > 0 ? 'pointer-events-none' : 'pointer-events-auto'}>
         {choices.map((choice, index) => (
           <Option
             key={index}
@@ -40,4 +42,4 @@ const Index = ({ question, score, setScore }: Props): JSX.Element => {
   )
 }
 
-export default Index
+export default Question

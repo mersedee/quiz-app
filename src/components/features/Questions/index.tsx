@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Steps, useSteps } from 'react-step-builder'
-import Index from '@/components/features/Questions/Question'
+import Question from '@/components/features/Questions/Question'
 import { QuestionType } from '@/types'
 import Button from '@/components/ui/Button'
 import { useGetQuestionsQuery } from '@/redux/services/QuizCategory'
@@ -55,7 +55,12 @@ const Questions = ({ options, setOptions }: Props): JSX.Element => {
                 <Steps>
                   { questions.results.length > 0 &&
                    questions.results.map((question: QuestionType, index: number) => (
-                     <Index key={index} question={question} setScore={setScore} score={score} />
+                     <Question
+                       key={index}
+                       question={question}
+                       setScore={setScore}
+                       score={score}
+                     />
                    ))}
                 </Steps>
                 <div className="flex justify-end mt-6">
