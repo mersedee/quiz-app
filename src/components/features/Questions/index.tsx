@@ -49,7 +49,7 @@ const Questions = ({ options, setOptions }: Props): JSX.Element => {
               <>
                 <div className="flex justify-between">
                   <div>Score: {score}</div>
-                  <div>{current} of {total} Question</div>
+                  <div>{current}-{count} of {total} Question</div>
                 </div>
                 <hr className="mt-4"/>
                 <Steps>
