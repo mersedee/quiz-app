@@ -43,13 +43,19 @@ const Questions = ({ options, setOptions }: Props): JSX.Element => {
                 <div className="text-3xl">
                 Your Score : <span className="font-medium">{score} / {total}</span>
                 </div>
-                <Button intent="primary" className="mx-auto mt-5" onClick={playAgain}>Play Again</Button>
+                <Button
+                  intent="primary"
+                  className="mx-auto mt-5"
+                  onClick={() => { void playAgain() }}
+                >
+                  Play Again
+                </Button>
               </div>)
             : (
               <>
                 <div className="flex justify-between">
                   <div>Score: {score}</div>
-                  <div>{current}-{count} of {total} Question</div>
+                  <div>{current} of {total} Question</div>
                 </div>
                 <hr className="mt-4"/>
                 <Steps>
