@@ -1,8 +1,7 @@
-import React, { useState, Dispatch, SetStateAction } from 'react'
+import { FC, useState, Dispatch, SetStateAction, useMemo, FormEvent } from 'react'
 import { useGetCategoriesQuery } from '@/redux/services/QuizCategory'
-import { SelectOption, Input } from '@/components/ui'
+import { SelectOption, Input, Button } from '@/components/ui'
 import { CategoryType, SelectOptionType } from '@/types'
-import Button from '@/components/ui/Button'
 
 const questionDifficultyValues = [
   { value: '', label: 'All' },
@@ -23,21 +22,21 @@ interface Props {
   setOptions: Dispatch<SetStateAction<string>>
 }
 
-const Setting = ({ setOptions }: Props): JSX.Element => {
+const Setting: FC<Props> = ({ setOptions }) => {
   const { data: categories, isFetching } = useGetCategoriesQuery()
   const [category, setCategory] = useState<SelectOptionType>(initialState)
   const [difficulty, setDifficulty] = useState<SelectOptionType>(initialState)
   const [questionType, setQuestionType] = useState<SelectOptionType>(initialState)
   const [questionNumber, setQuestionNumber] = useState<number>(10)
-  let formattedCategories: SelectOptionType[] = []
 
-  formattedCategories = !isFetching && (categories.trivia_categories.map((category: CategoryType) =>
-    ({
-      value: category.id,
-      label: category.name
-    })))
-
-  formattedCategories = ([] as SelectOptionType[]).concat(initialState, formattedCategories)
+  const formattedCategories = useMemo(() => {
+    if (isFetching) return [initialState]
+    return [initialState, ...categories.trivia_categories.map((category: CategoryType) =>
+      ({
+        value: category.id,
+        label: category.name
+      }))]
+  }, [categories, isFetching])
 
   const onChangeCategory = (selectedOption: any): void => {
     setCategory(selectedOption)
@@ -51,7 +50,7 @@ const Setting = ({ setOptions }: Props): JSX.Element => {
     setQuestionType(selectedOption)
   }
 
-  const onChangeAmount = (e: React.FormEvent<HTMLInputElement>): void => {
+  const onChangeAmount = (e: FormEvent<HTMLInputElement>): void => {
     setQuestionNumber(+e.currentTarget.value)
   }
 

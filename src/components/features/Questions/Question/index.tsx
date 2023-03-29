@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { FC, Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { QuestionType } from '@/types'
 import { decodeHTMLEntities } from '@/helpers/decodeHTMLEntities'
 import Option from '@/components/features/Questions/Question/Option'
@@ -9,10 +9,11 @@ interface Props {
   setScore: Dispatch<SetStateAction<number>>
 }
 
-const Question = ({ question, score, setScore }: Props): JSX.Element => {
+const Question: FC<Props> = ({ question, score, setScore }) => {
   const [userAnswer, setUserAnswer] = useState<string>('')
   const [choices, setChoices] = useState<string[]>([])
   const randomIndex = Math.floor(Math.random() * 4)
+
   const insert = (arr: string[], index: number, newItem: string): string[] => [
     ...arr.slice(0, index), newItem, ...arr.slice(index)
   ]
