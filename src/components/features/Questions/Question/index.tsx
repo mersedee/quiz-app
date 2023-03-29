@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { QuestionType } from '@/types'
 import { decodeHTMLEntities } from '@/helpers/decodeHTMLEntities'
 import Option from '@/components/features/Questions/Question/Option'
@@ -11,11 +11,16 @@ interface Props {
 
 const Question = ({ question, score, setScore }: Props): JSX.Element => {
   const [userAnswer, setUserAnswer] = useState<string>('')
+  const [choices, setChoices] = useState<string[]>([])
   const randomIndex = Math.floor(Math.random() * 4)
   const insert = (arr: string[], index: number, newItem: string): string[] => [
     ...arr.slice(0, index), newItem, ...arr.slice(index)
   ]
-  const choices = insert(question.incorrect_answers, randomIndex, question.correct_answer)
+
+  useEffect(() => {
+    const data = insert(question.incorrect_answers, randomIndex, question.correct_answer)
+    setChoices(data)
+  }, [])
 
   const checkAnswer = (select: string): any => {
     setUserAnswer(select)
@@ -25,7 +30,7 @@ const Question = ({ question, score, setScore }: Props): JSX.Element => {
   }
 
   return (
-    <div>
+    <>
       <h2 className="text-lg mt-3">{decodeHTMLEntities(question.question)}</h2>
 
       <ul className={userAnswer.length > 0 ? 'pointer-events-none' : 'pointer-events-auto'}>
@@ -38,7 +43,7 @@ const Question = ({ question, score, setScore }: Props): JSX.Element => {
           />
         ))}
       </ul>
-    </div>
+    </>
   )
 }
 

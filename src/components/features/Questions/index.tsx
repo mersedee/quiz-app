@@ -17,8 +17,6 @@ const Questions = ({ options, setOptions }: Props): JSX.Element => {
   const [score, setScore] = useState(0)
   const [count, setCount] = useState(1)
 
-  console.warn(questions)
-
   const onNext = (): void => {
     setCount(count + 1)
     next()
@@ -58,17 +56,18 @@ const Questions = ({ options, setOptions }: Props): JSX.Element => {
                   <div>{current} of {total} Question</div>
                 </div>
                 <hr className="mt-4"/>
-                <Steps>
-                  { questions.results.length > 0 &&
-                   questions.results.map((question: QuestionType, index: number) => (
-                     <Question
-                       key={index}
-                       question={question}
-                       setScore={setScore}
-                       score={score}
-                     />
-                   ))}
-                </Steps>
+                {questions.results.length > 0 &&
+                    <Steps>
+                      {questions.results.map((question: QuestionType, index: number) => (
+                        <Question
+                          key={index}
+                          question={question}
+                          setScore={setScore}
+                          score={score}
+                        />
+                      ))}
+                    </Steps>
+                }
                 <div className="flex justify-end mt-6">
                   <Button intent="primary" onClick={onNext}>Next</Button>
                 </div>
