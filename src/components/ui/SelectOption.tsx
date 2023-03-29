@@ -1,19 +1,23 @@
-import React from 'react'
-import Select, { SingleValue, ActionMeta } from 'react-select'
+import { FC } from 'react'
+import Select, { Props as SelectProps } from 'react-select'
 import { SelectOptionType } from '@/types'
 
-interface Props {
+interface Props extends SelectProps<SelectOptionType> {
   value: SelectOptionType | null
-  options: SelectOptionType[]
-  onChange: (newValue: SingleValue<SelectOptionType>, actionMeta: ActionMeta<SelectOptionType>) => void
 }
 
-const SelectOption = ({ value, options, onChange }: Props): JSX.Element => {
+const SelectOption: FC<Props> = ({
+  value,
+  options,
+  onChange,
+  ...rest
+}) => {
   return (
     <Select
       value={value}
       onChange={onChange}
       options={options}
+      {...rest}
     />
   )
 }

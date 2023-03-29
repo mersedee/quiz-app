@@ -1,12 +1,12 @@
-import React, { ComponentProps } from 'react'
+import React, { FC, InputHTMLAttributes } from 'react'
 
-interface Props extends ComponentProps<'input'> {}
+interface Props extends InputHTMLAttributes<HTMLInputElement> {}
 
-const Input = ({
+const Input: FC<Props> = ({
   id = 'id',
   type = 'text',
   ...props
-}: Props): JSX.Element => {
+}) => {
   return (
     <input
       type={type}

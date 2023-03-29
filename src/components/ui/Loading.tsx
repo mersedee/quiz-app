@@ -1,24 +1,15 @@
-import React from 'react'
+import { FC } from 'react'
 
 interface Props {
   className?: string
 }
 
-const Loading = ({ className = '' }: Props): JSX.Element => {
+const Loading: FC<Props> = ({ className = '' }) => {
   return (
-    <div className={`lds-spinner text-blue-500 inline-block relative w-[80px] h-[80px] ${className}`}>
-      <div/>
-      <div/>
-      <div/>
-      <div/>
-      <div/>
-      <div/>
-      <div/>
-      <div/>
-      <div/>
-      <div/>
-      <div/>
-      <div/>
+    <div className={`lds-spinner text-blue-500 inline-block relative w-16 h-16 ${className}`}>
+      {[...Array(12)].map((_, index) => (
+        <div key={index} />
+      ))}
     </div>
   )
 }
