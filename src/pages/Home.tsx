@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import { FC, useState } from 'react'
 import { Card } from '@/components/ui'
-import { Setting } from '@/components/features'
-import Questions from '@/components/features/Questions'
+import { Setting, Questions } from '@/components/features'
 
-const Home = (): JSX.Element => {
+const Home: FC = () => {
   const [options, setOptions] = useState<string>('')
 
   return (

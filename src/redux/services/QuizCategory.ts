@@ -5,9 +5,16 @@ export const categoryApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://opentdb.com/'
   }),
+  tagTypes: ['Category', 'Question'],
   endpoints: (builder) => ({
-    getCategories: builder.query<any, void>({ query: () => 'api_category.php' }),
-    getQuestions: builder.query<any, string>({ query: (feat) => `api.php${feat}` })
+    getCategories: builder.query<any, void>({
+      query: () => 'api_category.php',
+      providesTags: ['Category']
+    }),
+    getQuestions: builder.query<any, string>({
+      query: (feat) => `api.php${feat}`,
+      providesTags: ['Question']
+    })
   })
 })
 
