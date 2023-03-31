@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react'
+import { FC, ComponentProps } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 
 const buttonStyles = cva(
@@ -26,20 +26,15 @@ interface Props extends VariantProps<typeof buttonStyles>, ButtonOrLinkProps {
   className?: string
 }
 
-const Button = ({ intent, fullWidth, href, className = '', ...props }: Props): JSX.Element => {
+const Button: FC<Props> = ({ intent, fullWidth, href, className = '', ...props }) => {
   const isLink = typeof href !== 'undefined'
-  const ButtonOrLink = isLink ? 'a' : 'button'
-  const content = (
-    <ButtonOrLink
-      className={buttonStyles({ intent, fullWidth, className })}
-      {...props}
-    />)
+  const customStyle = buttonStyles({ intent, fullWidth, className })
 
   if (isLink) {
-    return <a href={href}>{content}</a>
+    return <a href={href} className={customStyle} {...props} />
   }
 
-  return content
+  return <button className={customStyle} {...props} />
 }
 
 export default Button

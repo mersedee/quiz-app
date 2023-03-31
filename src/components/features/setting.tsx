@@ -97,7 +97,7 @@ const Setting: FC<Props> = ({ setOptions }) => {
         fullWidth className="mt-6"
         onClick={onQuestionRequest}
       >
-          Get Started
+       Get Started
       </Button>
     </div>
   )
